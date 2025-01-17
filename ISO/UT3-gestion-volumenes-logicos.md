@@ -15,3 +15,5 @@
  1. pvcrate /dev/sdd1
  2. vgextend grupo1 /dev/sdd1: Extiende el grupo1 con el disco sdd1
  3. lvresize -L +25 /dev/grupo1/discologico
+ ## Reto
+ Crear un disco RAID desde un volumen lógico.
