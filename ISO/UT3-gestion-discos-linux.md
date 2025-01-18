@@ -28,6 +28,9 @@ Una vez creada la partición de nuestro disco, necesitamos crear el sistema de a
 
 Para poder utilizar nuestro nuevo disco primero debemos asignarle un punto demontaje, lo que se conoce como montar el disco. Linux lo hace automáticamente al iniciar el equipo, por lo que una de nuestras opciones es reiniciar el ordenador y dejar que el sistema se encargue. No obstante, si queremos montar nuestra unidad en el mismo momento sin la necesidad de un reinicio, podemos utilizar el comando `mount /dev/sdb1 /media/disco2`. Nuevamente con el parámetro `/dev/sdb1` nos referimos al disco en cuestión (recordemos que el nombre puede cambiar) y con `/media/disco2` indicamos la ruta del directorio en el cual se montará. Si bien un disco se puede montar en cualquier directorio de Linux, por convención siempre se montan en una carpeta propia dentro del directorio `/media`.
 
+>[!TIP]
+>Debemos tener en cuenta que la carpeta `disco2` que hemos creado en el directorio `/media` para montar nuestro disco ha sido creada por nosotros como usuarios `root`, por lo que solo nosotros tenemos acceso a ella y por tanto, al disco. Para que el resto de usuarios pueda acceder a él, tenemos que modificar los permisos correspondientes con el comando `chmod`.
+
 ### 1.4 Fijar el punto de montaje
 
 Aunque ya se le ha asignado un punto de montaje al disco, en este momento no está fijado. Es decir, que una vez reiniciemos nuestro ordenador, Linux montará el disco en una ubicación del sistema a su elección y bajo un nuevo nombre, complicando su localización. Para evitar que esto ocurra y que el disco siempre se monte en la misma carpeta, debemos editar mediante el comando `nano /etc/fstab` las líneas de código de este archivo. En el último renglón escribiremos lo siguiente `/dev/sdb1 /media/disco2 ext4 defaults 0 0`, en el cual indicamos en orden el disco (`/dev/sdb1`), la ubicación en la que se debe montar (`/media/disco2`) y por último su sistema de archivos (`ext4`). La sintaxis `defaults 0 0` simplemente indica al sistema que utilice el resto de parámetros por defecto.
@@ -35,7 +38,7 @@ Aunque ya se le ha asignado un punto de montaje al disco, en este momento no est
 >[!TIP]
 >El archivo `fstab` _(files system table)_ contiene un listado de todos los discos y particiones presentes en el sistema, y en él se indican cómo montar cada dispositivo y su configuración a utilizar a la hora de iniciar el sistema. Siempre se localiza en la carpeta `/etc`.
 
-### Anexo: Comandos utilizados y otros útiles
+### Anexo: Comandos utilizados <!-- Pendiente de actualizar con otros útiles -->
 
 | Comando | Sintaxis | Uso | Ejemplo |
 |:---------|:----------|:-----|:------|
