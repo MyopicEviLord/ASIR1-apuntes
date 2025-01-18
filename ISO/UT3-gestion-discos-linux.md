@@ -44,8 +44,8 @@ Aunque ya se le ha asignado un punto de montaje al disco, en este momento no est
 |:---------|:----------|:-----|:------|
 | `lsblk` | `lsblk [parámetros]` | Lista información sobre todos los dispositivos de bloque disponibles en el sistema. | `lsblk \|grep -v loop` |
 | `fdisk` | `fdisk [parámetros] (/dev/disco)` | Utilizado para dividir de forma lógica un disco, es decir, crear particiones. | `fdisk /dev/sdb` |
-| `Mkfs` | `Mkfs.(formato) (/dev/disco)` | Permite formatear un dispositivo con el sistema de archivos indicado. | `Mkfs.ext4 /dev/sdb1` |
-| `mount` | `mount (/dev/disco) (/media/ruta de montaje)` | Monta el disco indicado en la ruta especificada. | `mount /dev/sdb1 /media/disco2` |
+| `Mkfs` | `Mkfs.(formato) (/dev/partición)` | Permite formatear un dispositivo con el sistema de archivos indicado. | `Mkfs.ext4 /dev/sdb1` |
+| `mount` | `mount (/dev/partición) (/media/ruta de montaje)` | Monta el disco indicado en la ruta especificada. | `mount /dev/sdb1 /media/disco2` |
 | `nano` | `nano (ruta de archivo)` | Permite editar un archivo mediante un editor de textos. | `nano /etc/fstab` |
 
 [^1]: Si el sistema pregunta si queremos crear una partición extendida (`e`) o primaria (`p`) escogeremos la segunda opción.
