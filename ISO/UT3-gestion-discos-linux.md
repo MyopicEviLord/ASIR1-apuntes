@@ -1,7 +1,7 @@
 # Gestión de Discos en Linux
 ## 1. Conexión y activación de un disco nuevo
 
-Luego de conectar el nuevo disco, ya sea físicamente o de manera virtual, iniciamos nuestro equipo. Una vez dentro de nuestra sesión, abrimos el terminal e introducimos el comando `lsblk`, que mostrará en pantalla un listado de los discos presentes en nuestro dispositivo y sus correspondientes particiones. Si queremos evitar que Linux también nos muestre en el listado los discos loop del sistema, podemos agregar a nuestro comando los atributos `|grep -v loop` para simplificar la visualización.
+Luego de conectar el nuevo disco, ya sea físicamente o de manera virtual, iniciamos nuestro equipo. Una vez dentro de nuestra sesión, abrimos el terminal e introducimos el comando `lsblk`, que mostrará en pantalla un listado de los discos presentes en nuestro dispositivo y sus correspondientes particiones. Si queremos evitar que Linux también nos muestre en el listado los discos loop del sistema, podemos agregar a nuestro comando los parámetros `|grep -v loop` para simplificar la visualización.
 
 ### 1.1 Crear una partición
 Para crear una partición en un disco, ejecutaremos el comando `fdisk /dev/sdb`. Una vez dentro de la interfaz, utilizaremos la tecla `g` para asignarle una etiqueta GPT al volumen y a continuación `n` para añadir una nueva partición en el disco sdb[^1].
