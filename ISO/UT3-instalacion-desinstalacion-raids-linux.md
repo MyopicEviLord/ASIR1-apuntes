@@ -12,16 +12,16 @@ Para poder proceder a la creación, instalación, manipulación y desinstalació
 Una vez tenemos los discos preparados, procedemos a la creación de nuestro primer RAID. Para ello abrimos la terminal y utilizamos el comando `mdadm --create /dev/md0 --level=raid1 --raid-devices=2 /dev/sdb /dev/sdc`, donde encontramos los siguientes parámetros:
 
 * `--create`: Indica que se procederá a la creación de un RAID. También se puede sustituir por `-C`.
-* `/dev/md0`: Asigna el nombre que indiquemos al RAID creado, en este caso será `md0`.
-* `--level=raidX`: Se utiliza para establecer qué tipo de RAID se va a crear. Debe ir seguido inmediatamente del número, como en nuestro caso `--level=raid1`.
-* `--raid-devices=X`: Indica cuántos discos conformarán el RAID. En el ejemplo dado, serán 2.
-* `/dev/sdb /dev/sdc`: Son los discos que utilizaremos en la composición del RAID, en esta caso serán `sdb` y `sdc`.
+* `/dev/md0`: Asigna el nombre que indiquemos al RAID creado, en este caso el escogido es `md0`.
+* `--level=raid1`: La cifra final establece el nivel de RAID se va a crear. Como podemos ver, se trata de un RAID1.
+* `--raid-devices=2`: Indica cuántos discos conformarán el RAID. En el ejemplo dado, serán 2.
+* `/dev/sdb /dev/sdc`: Son los discos que utilizaremos en la composición del RAID, para nuestro ejercicio serán `sdb` y `sdc`.
 
-Una vez creado el RAID5, podemos monitorizar su estado, funcionamiento y componentes mediante el comando `cat /dev/md0`. Para obtener información más detallad, también tenemos el comando `mdadm /dev/md0`. Como podemos ver, siempre debemos indicar el nombre que hemos asignado al RAID: `md0`.
+Una vez ejecutemos el comando y se haya creado el RAID5, podemos monitorizar su estado, funcionamiento y componentes (y el del resto de RAID si los hay) mediante el comando `cat /proc/mdstat`. Para obtener información más detallada, también tenemos el comando `mdadm /dev/md0`. Como podemos ver, en este último se debe indicar el nombre  al RAID que nos interesa.
 
 ### Simular un fallo de disco
 
-Dado que la principal función de los RAID es la de ofrecer una manera de salvaguardar los datos ante posibles accidentes, vamos a simular la rotura de un disco. Para lograrlo recurrimos nuevamente al comando mdadm, esta vez con los parámetros
+Dado que la principal función de los RAID es la de ofrecer una manera de salvaguardar los datos ante posibles accidentes, vamos a simular la rotura de un disco. Para lograrlo recurrimos al comando `mdadm-f /dev/md0 /dev/sdc`, donde el parámetro `-f` indica que simularemos un fallo, `/dev/md0` se refiere al RAID y `/dev/sdc` al disco que queremos romper. Una vez ejecutado, si utilizamos nuevamente `cat /proc/mdstat` comprobaremos que junto al disco `sdc` aparece ahora la indicación `(F)` que nos dice que efectivamente, nuestro disco tiene un fallo. También podemos ver que el disco restante continúa funcionando sin problemas.
 
 ### Anexo: Comandos usados y otros útiles
 
