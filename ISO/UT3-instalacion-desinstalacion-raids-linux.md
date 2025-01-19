@@ -15,11 +15,17 @@ Una vez tenemos los discos preparados, procedemos a la creación de nuestro prim
 * `/dev/md0`: Asigna el nombre que indiquemos al RAID creado, en este caso será `md0`.
 * `--level=raidX`: Se utiliza para establecer qué tipo de RAID se va a crear. Debe ir seguido inmediatamente del número, como en nuestro caso `--level=raid1`.
 * `--raid-devices=X`: Indica cuántos discos conformarán el RAID. En el ejemplo dado, serán 2.
-* `/dev/sdb /dev/sdc`: Son los discos que utilizaremos en la composición del RAID, en esta caso serán `sdb` y `sdc`. 
+* `/dev/sdb /dev/sdc`: Son los discos que utilizaremos en la composición del RAID, en esta caso serán `sdb` y `sdc`.
+
+Una vez creado el RAID5, podemos monitorizar su estado, funcionamiento y componentes mediante el comando `cat /dev/md0`. Para obtener información más detallad, también tenemos el comando `mdadm /dev/md0`. Como podemos ver, siempre debemos indicar el nombre que hemos asignado al RAID: `md0`.
+
+### Simular un fallo de disco
+
+Dado que la principal función de los RAID es la de ofrecer una manera de salvaguardar los datos ante posibles accidentes, vamos a simular la rotura de un disco. Para lograrlo recurrimos nuevamente al comando mdadm, esta vez con los parámetros
 
 ### Anexo: Comandos usados y otros útiles
 
 | Comando | Sintaxis | Uso | Ejemplo |
 |:--------|:---------|:----|:--------|
-|`cat /proc/mdstat` | `cat /proc/mdstat` | Permite comprobar y monitorizar el estado de los RAID presentes en el equipo. | `cat /proc/mdstat` |
+|`cat` | `cat [parámetros] (archivo)` | Muestra en la terminal el contenido de un archivo. | `cat /proc/mdstat` |
 | `mdadm /dev/md0` | `mdadm /dev/dispositivo RAID` | Ofrece información más detallada sobre el volumen RAID que indiquemos. | `mdadm /dev/md0` |
