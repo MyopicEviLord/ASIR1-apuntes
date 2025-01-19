@@ -19,9 +19,14 @@ Una vez tenemos los discos preparados, procedemos a la creación de nuestro prim
 
 Una vez ejecutemos el comando y se haya creado el RAID5, podemos monitorizar su estado, funcionamiento y componentes (y el del resto de RAID si los hay) mediante el comando `cat /proc/mdstat`. Para obtener información más detallada, también tenemos el comando `mdadm /dev/md0`. Como podemos ver, en este último se debe indicar el nombre  al RAID que nos interesa.
 
+>[!TIP]
+>El archivo `mdstat` _(multiple device status)_ se encuentra en la carpeta `/proc` y contiene información sobre las configuraciones de disco múltiples presentes en el sistema, es decir, de los RAID.
+
 ### Simular un fallo de disco
 
 Dado que la principal función de los RAID es la de ofrecer una manera de salvaguardar los datos ante posibles accidentes, vamos a simular la rotura de un disco. Para lograrlo recurrimos al comando `mdadm-f /dev/md0 /dev/sdc`, donde el parámetro `-f` indica que simularemos un fallo, `/dev/md0` se refiere al RAID y `/dev/sdc` al disco que queremos romper. Una vez ejecutado, si utilizamos nuevamente `cat /proc/mdstat` comprobaremos que junto al disco `sdc` aparece ahora la indicación `(F)` que nos dice que efectivamente, nuestro disco tiene un fallo. También podemos ver que el disco restante continúa funcionando sin problemas.
+
+Un disco con fallos no es útil para nuestro RAID, por lo que procederemos a retirarlo del mismo mediante el comando `mdadm --remove /dev/md0 /dev/sdc`. Si queremos agregar un nuevo disco el comando es casi idéntico: `mdadm --add /dev/md0 /dev/sdd`. En función del tamaño del disco y la información almacenada, el proceso de adición del nuevo disco puede llevar un tiempo.
 
 ### Anexo: Comandos usados y otros útiles
 
