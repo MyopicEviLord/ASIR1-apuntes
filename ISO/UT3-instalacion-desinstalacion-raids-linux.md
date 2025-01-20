@@ -24,19 +24,22 @@ Una vez ejecutemos el comando y se haya creado el RAID5, podemos monitorizar su 
 >[!TIP]
 >El archivo `mdstat` _(multiple device status)_ se encuentra en la carpeta `/proc` y contiene información sobre las configuraciones de disco múltiples presentes en el sistema, es decir, de los RAID.
 
-### Simular un fallo de disco
+### 1.3 Simular un fallo de disco
 
 Dado que la principal función de los RAID es la de ofrecer una manera de salvaguardar los datos ante posibles accidentes, vamos a simular la rotura de un disco. Para lograrlo recurrimos al comando `mdadm -f /dev/md0 /dev/sdc`, donde el parámetro `-f` indica que simularemos un fallo, `/dev/md0` se refiere al RAID y `/dev/sdc` al disco que queremos romper. Una vez ejecutado, si utilizamos nuevamente `cat /proc/mdstat` comprobaremos que junto al disco `sdc` aparece ahora la indicación `(F)` que nos dice que efectivamente, nuestro disco tiene un fallo. También podemos ver que el disco restante continúa funcionando sin problemas y el disco `sdd` ha pasado de estar en espera a entrar en funcionamiento.
 
 Un disco con fallos no es útil para nuestro RAID, por lo que procederemos a retirarlo del mismo mediante el comando `mdadm --remove /dev/md0 /dev/sdc`. Si queremos agregar un nuevo disco el comando es casi idéntico: `mdadm --add /dev/md0 /dev/sdd`. En función del tamaño del disco y la información almacenada, el proceso de adición del nuevo disco puede llevar un tiempo. Tras finalizar, el RAID quedará totalmente recompuesto.
 
-### Monataje y anclado de un RAID
+### 1.4 Formateo, montaje y anclado de un RAID
 
-El procedimiento del montaje y el fijado de un RAID es idéntico al de los discos. La explicación completa se puede leer en 
+El procedimiento idéntico al que utilizamos con nuestros discos. La explicación completa se puede leer en ![Gestión de discos en Linux 1.2: Crear el sistema de ficheros](https://github.com/MyopicEviLord/ASIR1-apuntes/blob/main/ISO/UT3-gestion-discos-linux.md#12-crear-el-sistema-de-ficheros-filesystem), ![Gestión de discos en Linux 1.3: Montar la unidad](https://github.com/MyopicEviLord/ASIR1-apuntes/blob/main/ISO/UT3-gestion-discos-linux.md#13-montar-la-unidad) y ![Gestión de discos en LInux 1.4: Fijar el punto de montaje](https://github.com/MyopicEviLord/ASIR1-apuntes/blob/main/ISO/UT3-gestion-discos-linux.md#14-fijar-el-punto-de-montaje).
 
-### Detener y eliminar un RAID
+### 1.5 Detener y eliminar un RAID
 
-Para poder eliminar un RAID primero hemos de detener su funcionamiento. Para ello haremos uso del comando `mdadm --stop /dev/md0`, sin olvidarnos de indicar siempre el nombre del RAID.
+Para poder deshacer un RAID primero hemos de detener su funcionamiento. Para ello haremos uso del comando `mdadm --stop /dev/md0`, sin olvidarnos de indicar siempre el nombre del RAID. Una vez la terminal nos confirme que se ha detenido, podemos proceder a su desmontaje mediante el comando `umount /dev/md0` y finalmente, editar el archivo `fstab` para eliminar definitivamente el punto de anclaje.
+
+>[!IMPORTANT]
+>Si los discos que vamos a integrar a un RAID se han utilizado previamente en otro, entonces es recomendable recurrir al comando `mdadm --misc --zero-superblock /dev/(disco)`.
 
 ### Anexo: Comandos usados y otros útiles
 
