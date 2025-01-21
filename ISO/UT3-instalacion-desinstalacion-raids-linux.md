@@ -22,7 +22,7 @@ Una vez tenemos los discos preparados, procedemos a la creación de nuestro prim
 Una vez ejecutemos el comando y se haya creado el RAID5, podemos monitorizar su estado, funcionamiento y componentes (y el del resto de RAID si los hay) mediante el comando `cat /proc/mdstat`. Para obtener información más detallada sobre un RAID en específico, también tenemos el comando `mdadm /dev/md0`. Como podemos ver, en este último se debe indicar el nombre del RAID que nos interesa.
 
 >[!TIP]
->El archivo `mdstat` _(multiple device status)_ se encuentra en la carpeta `/proc` y contiene información sobre las configuraciones de disco múltiples presentes en el sistema, es decir, de los RAID.
+>El archivo `mdstat` _(multiple device status)_ se encuentra en la carpeta `/proc` y contiene información sobre las matrices de disco múltiples presentes en el sistema, es decir, de los RAID. En él se pueden ver los distintos RAID, sus discos componentes y sus roles.
 
 ### 1.3 Simular un fallo de disco
 
@@ -36,14 +36,15 @@ El procedimiento idéntico al que utilizamos con nuestros discos. La explicació
 
 ### 1.5 Detener y eliminar un RAID
 
-Para poder deshacer un RAID primero hemos de detener su funcionamiento. Para ello haremos uso del comando `mdadm --stop /dev/md0`, sin olvidarnos de indicar siempre el nombre del RAID. Una vez la terminal nos confirme que se ha detenido, podemos proceder a su desmontaje mediante el comando `umount /dev/md0` y finalmente, editar el archivo `fstab` para eliminar definitivamente el punto de anclaje.
+Para poder deshacer un RAID primero hemos de detener su funcionamiento. Para ello haremos uso del comando `mdadm --stop /dev/md0`, sin olvidarnos de indicar siempre el nombre del RAID. Una vez la terminal nos confirme que se ha detenido, podemos proceder a su desmontaje mediante el comando `umount /dev/md0` y finalmente, editar el archivo `fstab` para eliminar definitivamente el punto de anclaje y evitar que Linux intente volver a montarlo cuando se reinicie el sistema. Finalmente eliminamos el RAID mediante el comando `mdadm --remove /dev/md0`.
 
 >[!IMPORTANT]
->Si los discos que vamos a integrar a un RAID se han utilizado previamente en otro, entonces es recomendable recurrir al comando `mdadm --misc --zero-superblock /dev/(disco)`.
+>Una vez realizado este procedimiento es recomendable recurrir al comando `mdadm --misc --zero-superblock /dev/(disco)` en los distintos discos que componían nuestro RAID. Este formateo evita que por accidente se vuelvan a ensamblar de manera automática a otra matriz RAID.
 
 ### Anexo: Comandos usados y otros útiles
 
 | Comando | Sintaxis | Uso | Ejemplo |
 |:--------|:---------|:----|:--------|
 |`cat` | `cat [parámetros] (archivo)` | Muestra en la terminal el contenido de un archivo. | `cat /proc/mdstat` |
-| `mdadm /dev/md0` | `mdadm /dev/dispositivo RAID` | Ofrece información más detallada sobre el volumen RAID que indiquemos. | `mdadm /dev/md0` |
+| `mdadm` | `mdadm (/dev/dispositivo RAID) [parámetros]` | Herramienta que ofrece una amplia variedad de opciones para la creación, gestión y manipulación de matrices RAID. | `mdadm /dev/md0` |
+| `umount` | `umount (/dev/partición o dispositivo RAID) \| (/media/punto de montaje)`| Desmonta el disco o RAID indicado. | `umount /dev/md0` |
