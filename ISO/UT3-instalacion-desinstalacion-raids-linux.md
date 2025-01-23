@@ -16,10 +16,10 @@ Una vez tenemos los discos preparados, procedemos a la creación de nuestro prim
 * `--level=raid1`: La cifra final establece el nivel de RAID se va a crear. Como podemos ver, se trata de un RAID1.
 * `--raid-devices=2`: Indica cuántos discos conformarán el RAID. En el ejemplo dado, serán 2.
 * `/dev/sdb /dev/sdc`: Son los discos que utilizaremos en la composición del RAID, para nuestro ejercicio serán `sdb` y `sdc`.
-* `--spare-devices=1`: Indica cuántos discos colocaremos en modo de espera. Estos discos se pondrán automáticamente en funcinoamiento si por algún motivo, alguno de los discos activos del RAID sufre un fallo.
+* `--spare-devices=1`: Indica cuántos discos colocaremos en modo de espera. Estos discos se pondrán automáticamente en funcionamiento si por algún motivo, alguno de los discos activos del RAID sufre un fallo.
 * `/dev/sdd`: El disco que pondremos en modo de espera.
 
-Una vez ejecutemos el comando y se haya creado el RAID5, podemos monitorizar su estado, funcionamiento y componentes (y el del resto de RAID si los hay) mediante el comando `cat /proc/mdstat`. Para obtener información más detallada sobre un RAID en específico, también tenemos el comando `mdadm /dev/md0`. Como podemos ver, en este último se debe indicar el nombre del RAID que nos interesa.
+Una vez ejecutemos el comando y se haya creado el RAID1, podemos monitorizar su estado, funcionamiento y componentes (y el del resto de RAID si los hay) mediante el comando `cat /proc/mdstat`. Para obtener información más detallada sobre un RAID en específico, también tenemos el comando `mdadm /dev/md0`. Como podemos ver, en este último se debe indicar el nombre del RAID que nos interesa.
 
 >[!TIP]
 >El archivo `mdstat` _(multiple device status)_ se encuentra en la carpeta `/proc` y contiene información sobre las matrices de disco múltiples presentes en el sistema, es decir, de los RAID. En él se pueden ver los distintos RAID, sus discos componentes y sus roles.
