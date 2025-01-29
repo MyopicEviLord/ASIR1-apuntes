@@ -1,3 +1,5 @@
+## Linux
+
 1. apd update
 2. apt install quota quotatool
 3. nano /etc/fstab
@@ -8,3 +10,6 @@
 8. edquota -u (usuario)
 9. quota -vs usuario para comprobar las cuotas de un usuario/grupo
 10. quotaon /media/disco
+
+## Windows
+Desde la interfaz gráfica, entrar a las propiedades del disco y establecer nuevas cuotas.
