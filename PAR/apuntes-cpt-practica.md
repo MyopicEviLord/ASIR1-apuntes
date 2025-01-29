@@ -34,3 +34,5 @@ A continuación se desglosan los diferentes comandos utilizados:
 * `password (contraseña)`: establece una contraseña para utilizar la consola (nótese que al momento de definir la contraseña estamos dentro de la configuración de la línea 0, es decir, la consola).
 * Utilizar el comando `login`.
 * Finalmente utilizar `do write` para guardar los cambios.
+
+Entrar al PC configurado con consola, abrir el terminal en el escritorio y comprobar que hay conexión.
